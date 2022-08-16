@@ -2010,7 +2010,7 @@ pUserInfo = function(){
 	}
 
 	self.export = function(){
-		debugger
+
 		var v = {};
 
 		v.n = encodeURIComponent(self.name)
