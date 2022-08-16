@@ -14,6 +14,24 @@ var author = (function(){
 		var panel = null, uptimer = null, contentsready = false, fixedBlock = null, acsearch, share = null;
 
 		var actions = {
+      block : function(address, clbk){
+        self.app.nav.api.load({
+          open : true,
+          href : 'blocking',
+          inWnd : true,
+          history : true,
+
+          essenseData : {
+            address,
+          },
+
+          clbk : function(){
+            if (clbk)
+              clbk()
+          }
+        })
+      },
+
 			subscribeLabel : function(){
 
 				var user = self.app.user
@@ -92,7 +110,7 @@ var author = (function(){
 
 				self.app.mobile.vibration.small()
 
-				new dialog({
+				dialog({
 					html : self.app.localization.e('e13022'),
 					btn1text :  self.app.localization.e('unfollow'),
 					btn2text : self.app.localization.e('ucancel') ,
@@ -443,7 +461,7 @@ var author = (function(){
 					el.caption.find('.startchat').on('click', events.startchat)
 					el.caption.find('.unblocking').on('click', function(){
 		
-						new dialog({
+						dialog({
 							html : self.app.localization.e('e13023'),
 							btn1text : self.app.localization.e('unblock'),
 							btn2text : self.app.localization.e('ucancel'),
@@ -514,14 +532,33 @@ var author = (function(){
 						})
 
 						el.find('.block').on('click', function(){
-							self.app.mobile.vibration.small()
-							self.app.platform.api.actions.blocking(author.address, function(tx, error){
-								if(!tx){
-									self.app.platform.errorHandler(error, true)	
-								}
-							})
 
-							close()
+							if (self.app.platform.sdk.node.transactions.hasUnspentMultyBlocking()){
+								sitemessage(self.app.localization.e('blockinginprogress'))
+								return
+							}
+
+							self.app.mobile.vibration.small()
+								self.app.platform.api.actions.blocking(author.address, function (tx, error) {
+									if (!tx) {
+										self.app.platform.errorHandler(error, true)
+										return
+									}
+								})
+								dialog({
+									html: self.app.localization.e('blockingdisclaimer'),
+									btn1text: "Yes",
+									btn2text: "No",
+									class: 'zindex',
+									success: () => {
+
+										actions.block(author.address, function (error) {
+											console.log(error)
+										})
+									}
+								});
+
+								close()
 
 						})
 
@@ -1281,8 +1318,6 @@ var author = (function(){
 						el.caption.addClass('blocking');
 					}
 				}
-				
-				
 
 			})
 			

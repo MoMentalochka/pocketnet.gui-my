@@ -29,7 +29,6 @@ var comments = (function(){
 		var rendered = {};
 		var areas = {};
 		var external = null;
-		var bannerComment = null;
 		var currentstate = {};
 		var wordsRegExp = /[,.!?;:() \n\r]/g
 		var sortby = 'interesting' 
@@ -238,25 +237,7 @@ var comments = (function(){
 				else
 					c.removeClass('hastext')
 			},
-			complain : function(comment){
-				self.nav.api.load({
-					open : true,
-					id : 'complain',
-					inWnd : true,
-					essenseData : {
-						item : 'post',
-						obj : comment,
 
-						success : function(){
-
-						}
-					},
-
-					clbk : function(){
-
-					}
-				})
-			},
 			myscores : function(){
 				_.each(rendered, function(c, id){
 					var comment = deep(self.app.platform.sdk, 'comments.storage.all.' + id)
@@ -265,6 +246,23 @@ var comments = (function(){
 						clbks.upvote(null, comment, Number(comment.myScore), self.app.platform.sdk.address.pnet().address)
 					}
 				})	
+			},
+			block : function(address, clbk){
+				self.app.nav.api.load({
+					open : true,
+					href : 'blocking',
+					inWnd : true,
+					history : true,
+
+					essenseData : {
+						address
+					},
+
+					clbk : function(){
+						if (clbk)
+							clbk()
+					}
+				})
 			},
 			
 
@@ -518,7 +516,7 @@ var comments = (function(){
 
 							el.c.find('.sending').removeClass('sending')
 	
-							new dialog({
+							dialog({
 								html : self.app.localization.e('ratings123'),
 								btn1text :  self.app.localization.e('daccept'),
 								btn2text : self.app.localization.e('ucancel'),
@@ -1035,7 +1033,7 @@ var comments = (function(){
 
 					if (value < 0 && self.app.platform.sdk.user.scamcriteria()){
 
-						new dialog({
+						dialog({
 							html : self.app.localization.e('ratings123'),
 							btn1text :  self.app.localization.e('daccept'),
 							btn2text : self.app.localization.e('ucancel'),
@@ -1354,14 +1352,6 @@ var comments = (function(){
 
 					}, function(__el, f, close){
 
-						__el.find('.complain').on('click', function(){
-							self.app.mobile.vibration.small()
-							actions.complain(comment)
-
-							close()
-
-						})
-
 						__el.find('.edit').on('click', function(){
 
 							renders.edit(localParent, comment)
@@ -1370,10 +1360,15 @@ var comments = (function(){
 						})
 
 						__el.find('.block').on('click', function(){
+							if (self.app.platform.sdk.node.transactions.hasUnspentMultyBlocking()){
+								sitemessage(self.app.localization.e('blockinginprogress'))
+								return
+							}
 
 							self.app.platform.api.actions.blocking(d.caddress, function (tx, error) {
                                 if (!tx) {
                                     self.app.platform.errorHandler(error, true)
+																	return
                                 }
 								else
 								{
@@ -1383,6 +1378,18 @@ var comments = (function(){
 									var commentContentTable = localParent.find('.cbodyWrapper > .commentcontenttable')
 									commentContentTable.append(hiddenCommentLabel)
 									commentContentTable.append(ghostButton)
+									dialog({
+										html: self.app.localization.e('blockingdisclaimer'),
+										btn1text: "Yes",
+										btn2text: "No",
+										class: 'zindex',
+										success: () => {
+
+											actions.block(d.caddress, function (error) {
+												console.log(error)
+											})
+										}
+									});
 								}
 
                             })
@@ -1407,7 +1414,7 @@ var comments = (function(){
 
 						__el.find('.remove').on('click', function(){
 
-							new dialog({
+							dialog({
 								html : self.app.localization.e('e13032'),
 								success : function(){
 
@@ -2759,9 +2766,6 @@ var comments = (function(){
 					}, 100)
 					
 				}
-
-				bannerComment = app.platform.ui.showCommentBanner(el.c);
-
 			},
 
 			authclbk : function(){
@@ -2808,10 +2812,6 @@ var comments = (function(){
 
 				if (caption)
 					caption.destroy()
-
-				if (bannerComment) {
-					bannerComment.destroy();
-				}
 
 				if (el.c) el.c.empty()
 
