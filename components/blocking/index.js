@@ -16,14 +16,23 @@ var blocking = (function(){
 
     var events = {
         addToBlockList(event, liker) {
+
           let address = liker.attributes.address.value
+
           if (blocklist.includes(address)) {
             blocklist = blocklist.filter(i => i !== address)
             liker.children[0].classList.remove('checked')
           } else {
+
+            if (blocklist.length === 10) {
+              sitemessage(self.app.localization.e('blockinglimit_100'))
+              return
+            }
+
             blocklist.push(address)
             liker.children[0].classList.add('checked')
           }
+
         }
     }
 
@@ -94,10 +103,11 @@ var blocking = (function(){
 
         p.clbk(null, p);
 
+        setTimeout(() => sitemessage(self.app.localization.e('blockinglimit_100')), 1000)
       },
       wnd : {
         class : 'blockingwnd normalizedmobile maxheight',
-        header : "Users recommended for blocking",
+        header : `Users recommended for blocking`,
         buttons : {
           success : {
             text : "Block",
@@ -127,6 +137,7 @@ var blocking = (function(){
                         _.each(clbks, function (c) {
                           c(address)
                         })
+
                       }
 
                       topPreloader(100)
@@ -143,6 +154,7 @@ var blocking = (function(){
               }
 
               self.closeContainer()
+              sitemessage(self.app.localization.e('blockingsuccess'))
               return true
             }
           }

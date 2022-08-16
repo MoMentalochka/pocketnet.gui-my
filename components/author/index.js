@@ -14,23 +14,24 @@ var author = (function(){
 		var panel = null, uptimer = null, contentsready = false, fixedBlock = null, acsearch, share = null;
 
 		var actions = {
-			block : function(address, clbk){
-				self.app.nav.api.load({
-					open : true,
-					href : 'blocking',
-					inWnd : true,
-					history : true,
+      block : function(address, clbk){
+        self.app.nav.api.load({
+          open : true,
+          href : 'blocking',
+          inWnd : true,
+          history : true,
 
-					essenseData : {
-						address,
-					},
+          essenseData : {
+            address,
+          },
 
-					clbk : function(){
-						if (clbk)
-							clbk()
-					}
-				})
-			},
+          clbk : function(){
+            if (clbk)
+              clbk()
+          }
+        })
+      },
+
 			subscribeLabel : function(){
 
 				var user = self.app.user
@@ -531,6 +532,12 @@ var author = (function(){
 						})
 
 						el.find('.block').on('click', function(){
+
+							if (self.app.platform.sdk.node.transactions.hasUnspentMultyBlocking()){
+								sitemessage(self.app.localization.e('blockinginprogress'))
+								return
+							}
+
 							self.app.mobile.vibration.small()
 								self.app.platform.api.actions.blocking(author.address, function (tx, error) {
 									if (!tx) {
@@ -539,7 +546,7 @@ var author = (function(){
 									}
 								})
 								dialog({
-									html: "Do you want to also block connected accounts? ONLY do this for suspected bots.",
+									html: self.app.localization.e('blockingdisclaimer'),
 									btn1text: "Yes",
 									btn2text: "No",
 									class: 'zindex',
@@ -793,6 +800,7 @@ var author = (function(){
 			},
 
 			blocking : function(_el, report){
+
 				var u = _.map(deep(author, 'data.blocking') || [], function(a){
 					return a
 				})
@@ -1307,7 +1315,7 @@ var author = (function(){
 					var me = self.app.platform.sdk.users.storage[self.app.platform.sdk.address.pnet().address];
 
 					if (me && me.relation(author.address, 'blocking')){
-						el.caption.addClass('blocking');А
+						el.caption.addClass('blocking');
 					}
 				}
 
@@ -1327,6 +1335,7 @@ var author = (function(){
 		}
 
 		var init = function(){
+
 			renders.authorcaption(function(){
 				make(true);
 
