@@ -4698,6 +4698,10 @@ Platform = function (app, listofnodes) {
                         })
 
                         el.find('.block').on('click', function () {
+                            if (self.app.platform.sdk.node.transactions.hasUnspentMultyBlocking()){
+                                sitemessage(self.app.localization.e('blockinginprogress'))
+                                return
+                            }
                             self.app.mobile.vibration.small()
 
                              self.api.actions.blocking(address, function (tx, error) {
@@ -4706,7 +4710,7 @@ Platform = function (app, listofnodes) {
                                  }
                              })
                             dialog({
-                                html: "Do you want to also block connected accounts? ONLY do this for suspected bots.",
+                                html: self.app.localization.e('blockingdisclaimer'),
                                 btn1text: "Yes",
                                 btn2text: "No",
                                 class: 'zindex',
@@ -18347,6 +18351,13 @@ Platform = function (app, listofnodes) {
                             c(-amount);
                         })
                     }
+                },
+
+                hasUnspentMultyBlocking: function() {
+                    var s = Object.values(self.sdk.node.transactions.temp.blocking)
+                    return s.some(blocking => {
+                        return typeof blocking.vsaddress === 'object'
+                    })
                 },
 
                 get: {
