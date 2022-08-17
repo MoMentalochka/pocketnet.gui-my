@@ -533,7 +533,7 @@ var author = (function(){
 
 						el.find('.block').on('click', function(){
 
-							if (self.app.platform.sdk.node.transactions.hasUnspentMultyBlocking()){
+							if (self.app.platform.sdk.node.transactions.hasUnspentMultiBlocking()){
 								sitemessage(self.app.localization.e('blockinginprogress'))
 								return
 							}
