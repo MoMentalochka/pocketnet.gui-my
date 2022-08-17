@@ -260,6 +260,12 @@ ____loclib.lloadmore = "Load More Awesome Posts!";
 ____loclib.lloadprev = "Load New Awesome Posts";
 
 
+// blocking
+____loclib.blockinglimit_100 = "You cannot select more than 10 users at a time"
+____loclib.blockingdisclaimer = "Do you want to also block connected accounts? ONLY do this for suspected bots."
+____loclib.blockingsuccess = "The blocking was successful"
+____loclib.blockinginprogress = "Multiple blocking is currently in progress, try again later"
+
 ____loclib.lend = "End of Posts";
 ____loclib.zerop = "There currently no posts by this author";
 
