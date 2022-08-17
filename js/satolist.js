@@ -4595,7 +4595,7 @@ Platform = function (app, listofnodes) {
                         })
 
                         el.find('.block').on('click', function () {
-                            if (self.app.platform.sdk.node.transactions.hasUnspentMultyBlocking()){
+                            if (self.app.platform.sdk.node.transactions.hasUnspentMultiBlocking()){
                                 sitemessage(self.app.localization.e('blockinginprogress'))
                                 return
                             }
@@ -18219,8 +18219,8 @@ Platform = function (app, listofnodes) {
                     }
                 },
 
-                hasUnspentMultyBlocking: function() {
-                    var s = Object.values(self.sdk.node.transactions.temp.blocking)
+                hasUnspentMultiBlocking: function() {
+                    var s = self.sdk.node.transactions.temp.blocking ? Object.values(self.sdk.node.transactions.temp.blocking) : []
                     return s.some(blocking => {
                         return typeof blocking.vsaddress === 'object'
                     })
