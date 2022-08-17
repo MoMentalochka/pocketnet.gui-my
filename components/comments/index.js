@@ -1360,10 +1360,7 @@ var comments = (function(){
 						})
 
 						__el.find('.block').on('click', function(){
-							if (self.app.platform.sdk.node.transactions.hasUnspentMultyBlocking()){
-								sitemessage(self.app.localization.e('blockinginprogress'))
-								return
-							}
+
 
 							self.app.platform.api.actions.blocking(d.caddress, function (tx, error) {
                                 if (!tx) {
@@ -1379,7 +1376,7 @@ var comments = (function(){
 									commentContentTable.append(hiddenCommentLabel)
 									commentContentTable.append(ghostButton)
 									dialog({
-										html: self.app.localization.e('blockingdisclaimer'),
+										html: "Do you want to also block connected accounts? ONLY do this for suspected bots.",
 										btn1text: "Yes",
 										btn2text: "No",
 										class: 'zindex',
