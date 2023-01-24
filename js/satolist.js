@@ -31306,6 +31306,18 @@ Platform = function (app, listofnodes) {
 				},
 				getWithLocale: (key) => {
 					return  self.app.localization.e(key)
+				},
+				onIncomingCall: (call) => {
+					console.log('onIncomingCall')
+				},
+				onInitCall: (call) => {
+					console.log('onInitCall')
+				},
+				onConnected: (call) => {
+					console.log('onConnected')
+				},
+				onIncomionEndedngCall: (call) => {
+					console.log('onEnded')
 				}
 			}
 
