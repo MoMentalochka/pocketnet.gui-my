@@ -503,6 +503,7 @@ _l.follow = "Follow"
 _l.blocked = "Blocked"
 _l.e13021 = "Show more"
 
+_l.block = "Block"
 _l.blockuser = "Block User"
 _l.unblockuser = "Unblock User"
 _l.e13022 = "Do you really want to unfollow user?"
@@ -528,6 +529,7 @@ _l.autoplayVideo = "Autoplay Video"
 _l.onlyVideo = "Only video"
 _l.signToComment = "To view or post comments, you need to login or register"
 
+_l.blockUserQ = "Do you really want to block user?"
 _l.e13023 = "Do you really want to unblock user?"
 _l.e13024 = "Your Private Login Key"
 _l.e13025 = "Create a new account"
@@ -929,6 +931,7 @@ _l.e13285 = "Ask before post from telegram"
 _l.e13286 = "Ask before send to telegram"
 _l.e13287 = "Send to telegram channel"
 _l.video = "Video"
+_l.audio = "Audio"
 _l.e13288 = "Main Widgets Page"
 _l.e13289 = "Integration with Telegram"
 
@@ -1125,6 +1128,7 @@ _l.e14110 = "Google Play Market"
 
 
 _l.peertubeAddVideo = "Upload Video"
+_l.peertubeAddAudio = "Upload Audio"
 _l.peertubeAddStream = "Add live stream to post"
 
 _l.e14111 = "There was a problem with loading images"
@@ -1201,11 +1205,15 @@ _l.videoTranscodingNotOptimal = "Not optimal transcoding result. Continuing with
 _l.videoTranscodingError = "There was an error with processing your video"
 _l.videoUploadingFinish = "Finishing uploading..."
 _l.uploadNewVideo = "Upload New Pocketvideo"
+_l.uploadNewAudio = "Upload New Pocketaudio"
 _l.selectVideoFile = "Select video file"
+_l.selectAudioFile = "Select audio file"
 _l.uploadVideoProgress_binaries = "Preparing binaries:"
 _l.uploadVideoProgress_processing = "Processing video:"
 _l.uploadVideoProgress_uploading = "Uploading video:"
+_l.uploadAudioProgress_uploading = "Uploading audio:"
 _l.uploadVideoProgress_start = "Video download initialization:"
+_l.uploadAudioProgress_start = "Audio download initialization:"
 _l.uploadCanceled = "Upload canceled"
 
 _l.pleaseTryAgain = "Something was wrong there. Please try again"
@@ -2432,7 +2440,11 @@ _l.boost_c40 = 'Deposit the required amount of PKOIN to start advertising'
 _l.boost_c41 = 'Click the lightning bolt icon in the lower right corner of the selected post:'
 _l.boost_c42 = 'Enter PKOIN in the "Amount" field and click "Send":'
 _l.boost_c43 = 'Congratulations! You have launched an advertisement on Bastyon!'
-_l.boost_c44 = 'I want to launch an advertisement on the Bastyon!'
+_l.boost_c44 = 'Learn more about ads on Bastyon'
+_l.boost_c44_subject = 'Hi, I would like to learn more about launching my ads on Bastyon.';
+
+_l.reach = 'Reach'
+_l.reachDescription = 'Average cost of thousand impressions (CPM) is 20 cents'
 
 
 _l.gotopage = 'Go to page'
@@ -2473,5 +2485,8 @@ _l.authHeading = "Auth";
 
 _l.terms = 'Terms and Conditions for Bastyon';
 _l.daccept = "Accept and continue";
+
+_l.sendToChat = "Send message to chat";
+_l.createPost = "Create and publish the post";
 
 
